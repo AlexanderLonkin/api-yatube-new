@@ -13,8 +13,6 @@ class PostViewSet(ModelViewSet):
     queryset = Post.objects.select_related('author')
     serializer_class = PostSerializer
     permission_classes = (IsAuthenticatedAndAuthorOrReadOnly,)
-    lookup_url_kwarg = 'post_id'
-    lookup_value_regex = r'\d+'
 
     def perform_create(self, serializer):
         """Назначает текущего пользователя автором нового поста."""
@@ -26,8 +24,6 @@ class GroupViewSet(ReadOnlyModelViewSet):
 
     queryset = Group.objects.all()
     serializer_class = GroupSerializer
-    lookup_url_kwarg = 'group_id'
-    lookup_value_regex = r'\d+'
 
 
 class CommentViewSet(ModelViewSet):
@@ -35,8 +31,6 @@ class CommentViewSet(ModelViewSet):
 
     serializer_class = CommentSerializer
     permission_classes = (IsAuthenticatedAndAuthorOrReadOnly,)
-    lookup_url_kwarg = 'comment_id'
-    lookup_value_regex = r'\d+'
 
     def get_post(self):
         """Возвращает пост по `post_id` из URL или возбуждает `Http404`."""
